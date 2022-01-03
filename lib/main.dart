@@ -1,7 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vendor_flutter/Utils/appUtils.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import 'UI/Auth/login_bloc.dart';
 import 'UI/Auth/login_view.dart';
 
 void main() {
@@ -14,32 +18,43 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.grey,
+    return ScreenUtilInit(
+      designSize: Size(360,690),
+      builder: ()=>MaterialApp(
+        title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primarySwatch: Colors.grey,
+        ),
+        home: const Splash(),
       ),
-      home: const MyHomePage(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+class Splash extends StatefulWidget {
+  const Splash({Key? key}) : super(key: key);
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<Splash> createState() => _SplashState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _SplashState extends State<Splash> {
 @override
   void initState() {
   super.initState();
   Timer(
       Duration(seconds: 2),
-          () => Navigator.of(context).push(MaterialPageRoute(
-          builder: (BuildContext context) => Login()))
+          () =>
+              //AppUtils.launchScreen(context, Login(), LoginBloc())
+
+              Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => BlocProvider<LoginBloc>(
+                    create: (context) => LoginBloc(),
+                    child: Login(),
+                  )))
   );
   }
 
