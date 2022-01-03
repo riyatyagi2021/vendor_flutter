@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 
 class COLOR{
   static const Maroon=Color(0xff9c5348);
+  static const Orange=Color(0xffF16019);
   static const DarkMaroon=Color(0xff750000);
   static const LightPink=Color(0xfffff0ed);
   static const Black=Color(0xff2b2b2b);
@@ -24,7 +25,25 @@ class AppConstant{
 }
 
 class IMAGE{
-
+static String LOGO="assets/images/ic_cafe_1.png";
+static String Bg="assets/images/bg_img.png";
+static String ColdCoffee="assets/images/coldcoffee.jpeg";
+static String Drawer="assets/images/drawer_img.png";
+static String AboutUs="assets/images/ic_cafe_1.png";
+static String AddFood="assets/images/ic_cafe_1.png";
+static String BackArrow="assets/images/ic_cafe_1.png";
+static String Cross="assets/images/ic_cafe_1.png";
+static String DeleteFod="assets/images/ic_cafe_1.png";
+static String EditFood="assets/images/ic_cafe_1.png";
+static String Filter="assets/images/ic_cafe_1.png";
+static String AQFood="assets/images/ic_cafe_1.png";
+static String AddFoodImg="assets/images/ic_cafe_1.png";
+static String FoodItem="assets/images/ic_cafe_1.png";
+static String FoodPrice="assets/images/ic_cafe_1.png";
+static String DrawerMenu="assets/images/ic_cafe_1.png";
+static String MyOrder="assets/images/ic_cafe_1.png";
+static String DeleteFoodPopup="assets/images/ic_cafe_1.png";
+static String wallet="assets/images/ic_cafe_1.png";
 }
 
 

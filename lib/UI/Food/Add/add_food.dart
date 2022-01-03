@@ -89,7 +89,7 @@ class _AddFoodState extends State<AddFood> {
                         controller: price,
                         inputFormatters: [
                           FilteringTextInputFormatter.deny(' '),
-                          LengthLimitingTextInputFormatter(2),
+                          LengthLimitingTextInputFormatter(3),
                         ],
                         decoration: AppUtils.BorderDecoration("Type Price"),
                       ),
@@ -138,18 +138,21 @@ class _AddFoodState extends State<AddFood> {
                     SizedBox(height: 10,),
                     Row(
                       children: [
-                        Container(
-                          height: 80,
-                          width: 90,
-                          padding: EdgeInsets.all(15),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(Radius.circular(15)),
-                              border: Border.all(
-                                color: COLOR.Black
-                              ),
-                              color: Colors.white
+                        GestureDetector(
+
+                          child: Container(
+                            height: 80,
+                            width: 90,
+                            padding: EdgeInsets.all(15),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(Radius.circular(15)),
+                                border: Border.all(
+                                  color: COLOR.Black
+                                ),
+                                color: Colors.white
+                            ),
+                            child: Image.asset('assets/images/ic_food_image.png',height:50 ,width: 50,),
                           ),
-                          child: Image.asset('assets/images/ic_food_image.png',height:50 ,width: 50,),
                         ),
                         SizedBox(width: 10,),
                         Container(
@@ -204,12 +207,9 @@ class _AddFoodState extends State<AddFood> {
                   ],
                 ),
               ),
-
-
             ],
           ),
         ),
-
         ),
       ) ,
     );

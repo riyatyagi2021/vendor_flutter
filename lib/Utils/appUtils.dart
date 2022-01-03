@@ -1,6 +1,8 @@
+
 import 'package:flutter/material.dart';
 
 import 'package:vendor_flutter/Constants/constants.dart';
+import 'package:vendor_flutter/UI/Auth/login_view.dart';
 
 class AppUtils{
 
@@ -152,7 +154,24 @@ class AppUtils{
   }
 
 
-
+static loader(){
+    return Stack(
+        alignment: Alignment.center,
+        children:[
+          SizedBox(
+            height:50,
+            width: 50,
+            child: CircularProgressIndicator(
+              backgroundColor: COLOR.DarkMaroon,
+              valueColor: AlwaysStoppedAnimation<Color>(themeColor),
+            ),
+          ),
+          Align(
+              alignment: Alignment.center,
+              child: Image.asset('assets/images/ic_cafe_1.png',height: 30,width: 30,))
+        ]
+    );
+}
 
 
 

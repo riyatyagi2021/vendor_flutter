@@ -255,10 +255,13 @@ class _UserRequestState extends State<UserRequest> {
             color: COLOR.Black,
           ),
         ),
-        Text(
-          "User Request",
-          style: TextStyle(
-              fontWeight: FontWeight.bold, fontSize: 20, color: COLOR.Black),
+        GestureDetector(
+          onTap:() => bottomSheetDate(context) ,
+          child: Text(
+            "User Request",
+            style: TextStyle(
+                fontWeight: FontWeight.bold, fontSize: 20, color: COLOR.Black),
+          ),
         ),
         InkWell(
           splashColor: Colors.orange,
@@ -316,7 +319,7 @@ class _UserRequestState extends State<UserRequest> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   SizedBox(
-                    width:150,
+                    width:180,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -339,7 +342,7 @@ class _UserRequestState extends State<UserRequest> {
                           ],
                         ),
                             Container(
-                              width:150,
+                              width:180,
                               padding: const EdgeInsets.only(left: 25,top: 15,bottom: 15,right: 25),
                               color: Colors.grey.withOpacity(0.3),
                               child: Text("Status",style: TextStyle(

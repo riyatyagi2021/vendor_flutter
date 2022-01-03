@@ -9,9 +9,7 @@ import 'package:vendor_flutter/UI/Food/Edit/edit.dart';
 import 'package:vendor_flutter/UI/Home/AbousUs/about_us.dart';
 import 'package:vendor_flutter/UI/UserRequest/user_req.dart';
 import 'package:vendor_flutter/UI/Wallet/wallet.dart';
-import 'package:vendor_flutter/Utils/appUtils.dart';
 import 'package:vendor_flutter/Utils/preference_utils.dart';
-
 import 'home_bloc.dart';
 import 'home_state.dart';
 
@@ -47,10 +45,7 @@ class _HomePageState extends State<HomePage> {
               print(EMAIl+"name");
               print(NAME+"name");
               print(PHONE+"name");
-
             });
-            //print(" name ${apiData?.foodItemList?[0].name}");
-
             return Container(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
@@ -97,6 +92,10 @@ class _HomePageState extends State<HomePage> {
                               scrollDirection: Axis.vertical,
                               itemCount: apiData?.foodItemList?.length,
                               itemBuilder: (BuildContext context, int index) {
+
+                                var foodName=apiData?.foodItemList?[index].name;
+                               var price= apiData?.foodItemList?[0].price;
+
                                 return Container(
                                   height: 110,
                                   width: double.infinity,
@@ -129,12 +128,12 @@ class _HomePageState extends State<HomePage> {
                                               mainAxisAlignment: MainAxisAlignment.center,
                                               crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
-                                                Text(" ${apiData?.foodItemList?[index].name}",style: TextStyle(
+                                                Text(" ${foodName}",style: TextStyle(
                                                     fontSize: 14,
                                                     color: COLOR.Black
                                                 ),),
                                                 SizedBox(height: 4,),
-                                                Text("\u{20B9}${apiData?.foodItemList?[0].price}",style: TextStyle(
+                                                Text("\u{20B9}${price}",style: TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 12,
                                                     color: COLOR.Black
@@ -145,20 +144,16 @@ class _HomePageState extends State<HomePage> {
                                         ),
                                         IconButton(
                                             onPressed:(){
-                                              bottomSheet(context);
+                                              bottomSheet(context,foodName!,price!);
                                             }, icon: Icon(Icons.more_vert_rounded,color: COLOR.Black,size: 30,))
                                       ],
                                     ),
-
                                   ),
                                 );
                               },
-
                             ),
                           ),
                         )
-
-
                       ],
                     ),
                   ),
@@ -168,8 +163,6 @@ class _HomePageState extends State<HomePage> {
           }else{
             return Container();
           }
-
-
     })
       ),
     );
@@ -270,7 +263,7 @@ class _HomePageState extends State<HomePage> {
                                 borderRadius: BorderRadius.circular(10),
                                 color: COLOR.Maroon,
                               ),
-                              child: Image.asset('assets/images/ic_wallet_1.png',height: 20,width: 20,),
+                              child: Image.asset('assets/images/ic_my_order.png',height: 20,width: 20,color: COLOR.White,),
                             ),
                             Text("User Request",style: TextStyle(
                                 fontWeight: FontWeight.w400,
@@ -283,6 +276,7 @@ class _HomePageState extends State<HomePage> {
                       Divider(thickness: 2,indent: 50,endIndent: 20,color: COLOR.Grey.withOpacity(0.2),),
                       SizedBox(height: 10,),
                       InkWell(
+
                         onTap: ()=>Navigator.of(context).push(MaterialPageRoute(builder: (context)=>MyWallet())),
                         child: Row(
                           children: [
@@ -388,71 +382,7 @@ class _HomePageState extends State<HomePage> {
       ]
   );
 
-  /*Widget foodListData()=>ListView.builder(
-    shrinkWrap: true,
-    scrollDirection: Axis.vertical,
-    itemCount: apiData?.foodItemList?.length,
-    itemBuilder: (BuildContext context, int index) {
-      return Container(
-        height: 110,
-        width: double.infinity,
-        child: Card(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment:MainAxisAlignment.spaceBetween ,
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10.0,top: 10,bottom: 10),
-                    child: Container(
-                      height: 90,
-                      width: 90,
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                            //  image: AssetImage('assets/images/coldcoffee.jpeg',),
-                              image: NetworkImage('${apiData?.foodItemList?[index].images?[0]}',),
-                              fit: BoxFit.cover
-                          ),
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                          color: Colors.grey
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 20,),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(" ${apiData?.foodItemList?[index].name}",style: TextStyle(
-                          fontSize: 14,
-                          color: COLOR.Black
-                      ),),
-                      SizedBox(height: 4,),
-                      Text("Rs ${apiData?.foodItemList?[0].price}",style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12,
-                          color: COLOR.Black
-                      ),)
-                    ],
-                  ),
-                ],
-              ),
-              IconButton(
-                  onPressed:(){
-                    bottomSheet(context);
-                  }, icon: Icon(Icons.more_vert_rounded,color: COLOR.Black,size: 30,))
-            ],
-          ),
-
-        ),
-      );
-    },
-
-  );*/
-
-  bottomSheet(context){
+  bottomSheet(context,String foodname,int Price){
    showModalBottomSheet<void>(
         isDismissible: false,
         enableDrag: false,
@@ -495,7 +425,7 @@ class _HomePageState extends State<HomePage> {
 
                 onTap: () {
                   Navigator.pop(context);
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>EditFood()));
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>EditFood(foodName:foodname,price:Price)));
                 },
                 child: Row(
                   children: [

@@ -4,13 +4,26 @@ import 'package:vendor_flutter/Constants/constants.dart';
 import 'package:vendor_flutter/Utils/appUtils.dart';
 
 class EditFood extends StatefulWidget {
-  const EditFood({Key? key}) : super(key: key);
+  String? foodName;
+  int? price;
+   EditFood({Key? key, this.foodName,this.price}) : super(key: key);
 
   @override
   _EditFoodState createState() => _EditFoodState();
 }
 
 class _EditFoodState extends State<EditFood> {
+  TextEditingController newFoodName=TextEditingController();
+  TextEditingController newPrice=TextEditingController();
+  TextEditingController newQuant=TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    newFoodName.text=widget.foodName.toString();
+    newPrice.text=widget.price.toString();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,7 +66,7 @@ class _EditFoodState extends State<EditFood> {
                         height: 60,
                         child: TextField(
                           keyboardType: TextInputType.text,
-                          // controller: password,
+                         controller:newFoodName,
                           inputFormatters: [
                             FilteringTextInputFormatter.deny(' '),
                             LengthLimitingTextInputFormatter(20),
@@ -80,7 +93,7 @@ class _EditFoodState extends State<EditFood> {
                         height: 60,
                         child: TextField(
                           keyboardType: TextInputType.number,
-                          // controller: password,
+                          controller: newPrice,
                           inputFormatters: [
                             FilteringTextInputFormatter.deny(' '),
                             LengthLimitingTextInputFormatter(2),
@@ -107,7 +120,7 @@ class _EditFoodState extends State<EditFood> {
                         height: 60,
                         child: TextField(
                           keyboardType: TextInputType.number,
-                          // controller: password,
+                           controller: newQuant,
                           inputFormatters: [
                             FilteringTextInputFormatter.deny(' '),
                             LengthLimitingTextInputFormatter(2),
@@ -195,12 +208,9 @@ class _EditFoodState extends State<EditFood> {
                           ) ,
                         ),
                       )
-
                     ],
                   ),
                 ),
-
-
               ],
             ),
           ),
