@@ -23,7 +23,13 @@ class _EditFoodState extends State<EditFood> {
     newFoodName.text=widget.foodName.toString();
     newPrice.text=widget.price.toString();
   }
-
+@override
+  void dispose() {
+    super.dispose();
+    newPrice.dispose();
+    newFoodName.dispose();
+    newQuant.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

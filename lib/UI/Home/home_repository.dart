@@ -11,7 +11,7 @@ class FoodListRepository {
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var accesstoken = prefs.getString('access_token');
-    print(accesstoken.toString() + "bn");
+    print(accesstoken.toString() + "   bn");
     final productListRes = await http.get(
         Uri.parse('https://devhrmapi.mobcoder.com/hrm/api/v1/food/list'),
         headers: {
@@ -22,6 +22,7 @@ class FoodListRepository {
       print(" product list api hit? " + productListRes.body);
       FoodListModel foodListModel =
       FoodListModel.fromJson(jsonDecode(productListRes.body));
+      print("sxcfvgbnjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj");
       print("ProductList Body Response " + foodListModel.toString());
       return foodListModel;
     } else

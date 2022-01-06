@@ -1,6 +1,5 @@
 
 import 'package:flutter/material.dart';
-
 import 'package:vendor_flutter/Constants/constants.dart';
 import 'package:vendor_flutter/UI/Auth/login_view.dart';
 
@@ -154,7 +153,7 @@ class AppUtils{
   }
 
 
-static loader(){
+  static loader(){
     return Stack(
         alignment: Alignment.center,
         children:[

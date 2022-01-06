@@ -16,6 +16,14 @@ class _AddFoodState extends State<AddFood> {
   TextEditingController price=TextEditingController();
   TextEditingController quant=TextEditingController();
 
+  @override
+  void dispose() {
+    super.dispose();
+    foodName.dispose();
+    price.dispose();
+    quant.dispose();
+  }
+
 
   @override
   Widget build(BuildContext context) {

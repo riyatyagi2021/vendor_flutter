@@ -200,7 +200,7 @@ class _LoginState extends State<Login> {
                               ],
                               validator: (value) {
                                 if (value!.length < 6) {
-                                  return 'Must be more than 6 charater';
+                                  return 'Must be more than 6 charaters';
                                 }
                               },
                               decoration: InputDecoration(

@@ -46,13 +46,14 @@ class HomeBloc extends BaseBloc<HomeEvent, HomeState> {
   void onHomeApi() async {
 
     try {
-    Future.delayed(Duration(seconds: 2));
+   // Future.delayed(Duration(seconds: 2));
+      print("sdfcvgbhnnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
       FoodListModel foodListModel = await foodListRepository.productsApi("");
       print("ProductList Resp value" + foodListModel.toString());
       add(OnHomeApiHit(foodListModel));
 
     } catch(e) {
-      print("There is something wrong");
+      print("There is something wrong......");
     }
   }
 

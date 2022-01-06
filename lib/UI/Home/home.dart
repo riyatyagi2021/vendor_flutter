@@ -114,7 +114,7 @@ class _HomePageState extends State<HomePage> {
                                                 width: 90,
                                                 decoration: BoxDecoration(
                                                     image: DecorationImage(
-                                                      //  image: AssetImage('assets/images/coldcoffee.jpeg',),
+                                                     // image: AssetImage('assets/images/coldcoffee.jpeg',),
                                                         image: NetworkImage('${apiData?.foodItemList?[index].images?[0]}',),
                                                         fit: BoxFit.cover
                                                     ),

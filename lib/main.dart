@@ -1,14 +1,16 @@
 import 'dart:async';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:vendor_flutter/Utils/appUtils.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'UI/Auth/login_bloc.dart';
 import 'UI/Auth/login_view.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -19,8 +21,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: Size(360,690),
-      builder: ()=>MaterialApp(
+      designSize: Size(360, 690),
+      builder: () => MaterialApp(
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
@@ -40,22 +42,18 @@ class Splash extends StatefulWidget {
 }
 
 class _SplashState extends State<Splash> {
-@override
+  @override
   void initState() {
-  super.initState();
-  Timer(
-      Duration(seconds: 2),
-          () =>
-              //AppUtils.launchScreen(context, Login(), LoginBloc())
-
-              Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => BlocProvider<LoginBloc>(
-                    create: (context) => LoginBloc(),
-                    child: Login(),
-                  )))
-  );
+    super.initState();
+    Timer(
+        Duration(seconds: 2),
+        () => Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => BlocProvider<LoginBloc>(
+                      create: (context) => LoginBloc(),
+                      child: Login(),
+                    ))));
   }
 
   @override
@@ -68,37 +66,39 @@ class _SplashState extends State<Splash> {
             height: MediaQuery.of(context).size.height,
             padding: EdgeInsets.only(right: 30),
             decoration: const BoxDecoration(
-               image:DecorationImage(
-                   image: AssetImage('assets/images/bg_img.png'),
-                fit: BoxFit.cover
-               )
-            ),
+                image: DecorationImage(
+                    image: AssetImage('assets/images/bg_img.png'),
+                    fit: BoxFit.cover)),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Image.asset('assets/images/ic_cafe_1.png',height: 150,width: 150,),
-                SizedBox(height: 20,),
+                Image.asset(
+                  'assets/images/ic_cafe_1.png',
+                  height: 150,
+                  width: 150,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
                 Container(
                   margin: EdgeInsets.only(left: 30),
-                  child:  Text(
+                  child: Text(
                     'Kitchen Kilter',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 25,
-                      color: Colors.black
-                    ),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 25,
+                        color: Colors.black),
                   ),
                 ),
-               Container(
-                 margin: EdgeInsets.only(left: 30),
-                 child: Text(
+                Container(
+                  margin: EdgeInsets.only(left: 30),
+                  child: Text(
                     '---  WE SERVE PASSION  ---',
                     style: TextStyle(
-                        fontSize: 11,
-                        color: Colors.black.withOpacity(0.5)),
+                        fontSize: 11, color: Colors.black.withOpacity(0.5)),
                   ),
-               ),
+                ),
               ],
             ),
           ),
