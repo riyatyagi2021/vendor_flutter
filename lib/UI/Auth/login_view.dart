@@ -10,6 +10,7 @@ import 'package:vendor_flutter/UI/Home/home.dart';
 import 'package:vendor_flutter/UI/Home/home_bloc.dart';
 import 'package:vendor_flutter/Utils/appUtils.dart';
 import 'package:vendor_flutter/Utils/preference_utils.dart';
+
 import 'login_bloc.dart';
 import 'login_event.dart';
 import 'login_state.dart';
@@ -79,7 +80,7 @@ class _LoginState extends State<Login> {
                 .toString());
             PreferenceUtils.setUserProfile(
                 state.model.responseData!.employeeProfile!);
-            Navigator.push(
+            Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                     builder: (context) => BlocProvider<HomeBloc>(
@@ -89,14 +90,14 @@ class _LoginState extends State<Login> {
 
             // Navigator.of(context).push(MaterialPageRoute(
             //     builder: (BuildContext context) => HomePage()));
-                  } else {
+          } else {
             isLoading = false;
             print(state.isError.toString() +
                 "  gdvbhsnkm,sdfdddddddddddsdfghbjnmk,");
             Fluttertoast.showToast(msg: "Check email or password");
-                  }
-                },
-              builder: (context, state) {
+          }
+        },
+        builder: (context, state) {
           return Stack(
             children: [
               SafeArea(
@@ -117,7 +118,7 @@ class _LoginState extends State<Login> {
                           Padding(
                             padding: const EdgeInsets.only(right: 30),
                             child: Image.asset(
-                             IMAGE.LOGO,
+                              IMAGE.LOGO,
                               height: 150,
                               width: 150,
                             ),
@@ -287,13 +288,12 @@ class _LoginState extends State<Login> {
               ),
               isLoading
                   ? Container(
-                      color: Colors.green.shade50.withOpacity(0.8),
+                      // color: Colors.green.shade50.withOpacity(0.8),
                       height: MediaQuery.of(context).size.height,
                       width: MediaQuery.of(context).size.width,
                       child: AppUtils.loader(),
                     )
                   : Container()
-
             ],
           );
         },

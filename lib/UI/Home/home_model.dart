@@ -4,12 +4,17 @@ class FoodListModel {
   RequestParams? requestParams;
   String? time;
 
-  FoodListModel({this.statusCode, this.responseData, this.requestParams, this.time});
+  FoodListModel(
+      {this.statusCode, this.responseData, this.requestParams, this.time});
 
   FoodListModel.fromJson(Map<String, dynamic> json) {
     statusCode = json['statusCode'];
-    responseData = json['responseData'] != null ? new ResponseData.fromJson(json['responseData']) : null;
-    requestParams = json['requestParams'] != null ? new RequestParams.fromJson(json['requestParams']) : null;
+    responseData = json['responseData'] != null
+        ? new ResponseData.fromJson(json['responseData'])
+        : null;
+    requestParams = json['requestParams'] != null
+        ? new RequestParams.fromJson(json['requestParams'])
+        : null;
     time = json['time'];
   }
 
@@ -38,7 +43,9 @@ class ResponseData {
     message = json['message'];
     if (json['foodItemList'] != null) {
       foodItemList = <FoodItemList>[];
-      json['foodItemList'].forEach((v) { foodItemList?.add(new FoodItemList.fromJson(v)); });
+      json['foodItemList'].forEach((v) {
+        foodItemList?.add(new FoodItemList.fromJson(v));
+      });
     }
     isAdmin = json['isAdmin'];
   }
@@ -62,11 +69,21 @@ class FoodItemList {
   String? description;
   int? isAvailable;
   int? availableQuantity;
-  List<String>? images;
+  List<dynamic>? images;
   VendorDetail? vendorDetail;
   int? isDeleted;
 
-  FoodItemList({this.name, this.foodId, this.price, this.status, this.description, this.isAvailable, this.availableQuantity, this.images, this.vendorDetail, this.isDeleted});
+  FoodItemList(
+      {this.name,
+      this.foodId,
+      this.price,
+      this.status,
+      this.description,
+      this.isAvailable,
+      this.availableQuantity,
+      this.images,
+      this.vendorDetail,
+      this.isDeleted});
 
   FoodItemList.fromJson(Map<String, dynamic> json) {
     name = json['name'];
@@ -76,8 +93,10 @@ class FoodItemList {
     description = json['description'];
     isAvailable = json['isAvailable'];
     availableQuantity = json['availableQuantity'];
-    images = json['images'].cast<String>();
-    vendorDetail = json['vendorDetail'] != null ? new VendorDetail.fromJson(json['vendorDetail']) : null;
+    images = json['images']; //.cast<dynamic>();
+    vendorDetail = json['vendorDetail'] != null
+        ? new VendorDetail.fromJson(json['vendorDetail'])
+        : null;
     isDeleted = json['isDeleted'];
   }
 
@@ -125,15 +144,12 @@ class VendorDetail {
 }
 
 class RequestParams {
-
-
   RequestParams();
 
-RequestParams.fromJson(Map<String, dynamic> json) {
-}
+  RequestParams.fromJson(Map<String, dynamic> json) {}
 
-Map<String, dynamic> toJson() {
-  final Map<String, dynamic> data = new Map<String, dynamic>();
-  return data;
-}
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    return data;
+  }
 }

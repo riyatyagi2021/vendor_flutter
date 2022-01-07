@@ -1,11 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:vendor_flutter/Constants/constants.dart';
 import 'package:vendor_flutter/UI/Auth/login_view.dart';
 
-class AppUtils{
-
-  static Header(context,String text){
+class AppUtils {
+  static Header(context, String text) {
     return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
       InkWell(
         splashColor: Colors.orange,
@@ -22,11 +20,11 @@ class AppUtils{
         style: TextStyle(
             fontWeight: FontWeight.bold, fontSize: 20, color: COLOR.Black),
       ),
-      Text("")//for using row property
+      Text("") //for using row property
     ]);
   }
 
-  static walletMoney(Color bg, double money,String margin){
+  static walletMoney(Color bg, double money, String margin) {
     return Container(
       margin: EdgeInsets.only(right: double.parse(margin)),
       padding: EdgeInsets.symmetric(horizontal: 25),
@@ -41,26 +39,34 @@ class AppUtils{
         children: [
           Row(
             children: [
-              Image.asset('assets/images/ic_wallet_1.png',height: 20,width: 30,),
-              SizedBox(width: 5,),
-              Text("Wallet",style: TextStyle(
-                //fontWeight: FontWeight.bold,
-                  fontSize: 15,
-                  color: COLOR.White
-              ),),
+              Image.asset(
+                'assets/images/ic_wallet_1.png',
+                height: 20,
+                width: 30,
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              Text(
+                "Wallet",
+                style: TextStyle(
+                    //fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                    color: COLOR.White),
+              ),
             ],
           ),
-          Text("\u{20B9} ${money}",style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 14,
-              color: COLOR.White
-          ),)
+          Text(
+            "\u{20B9} ${money}",
+            style: TextStyle(
+                fontWeight: FontWeight.bold, fontSize: 14, color: COLOR.White),
+          )
         ],
       ),
     );
   }
 
-  static orderDetails(String text){
+  static orderDetails(String text) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 25),
       width: double.infinity,
@@ -69,74 +75,76 @@ class AppUtils{
         borderRadius: BorderRadius.circular(10),
         color: COLOR.DarkMaroon,
       ),
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset('assets/images/ic_my_order.png',height: 20,width: 30,color: COLOR.White,),
-            SizedBox(width: 5,),
-            Text(text,style: TextStyle(
-              fontWeight: FontWeight.bold,
-                fontSize: 15,
-                color: COLOR.White
-            ),),
-          ],
-        ),
-        SizedBox(height: 5,),
-        Text("Mon, 12 Jul 2021, 09:46 am", style: TextStyle(color: COLOR.White.withOpacity(0.8)),)
-      ],
-    ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                'assets/images/ic_my_order.png',
+                height: 20,
+                width: 30,
+                color: COLOR.White,
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              Text(
+                text,
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                    color: COLOR.White),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          Text(
+            "Mon, 12 Jul 2021, 09:46 am",
+            style: TextStyle(color: COLOR.White.withOpacity(0.8)),
+          )
+        ],
+      ),
     );
   }
 
   static launchScreen(context, screen) {
     Navigator.push(
       context,
-      MaterialPageRoute(
-         builder: (context) => screen
-      ),
+      MaterialPageRoute(builder: (context) => screen),
     );
   }
 
-
-  static BorderDecoration(String text){
+  static BorderDecoration(String text) {
     return InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(25.0),
-          borderSide:
-          BorderSide(color: COLOR.Black, width: 1.0),
+          borderSide: BorderSide(color: COLOR.Black, width: 1.0),
         ),
-        contentPadding: EdgeInsets.symmetric(vertical: 5,horizontal: 20),
+        contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
         enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              width: 1.5,
-                color: COLOR.Black
-            ),
+            borderSide: BorderSide(width: 1.5, color: COLOR.Black),
             borderRadius: BorderRadius.circular(25)),
         focusedBorder: OutlineInputBorder(
-            borderSide:BorderSide(
-                width: 1.5,
-                color: COLOR.Black
-            ),
+            borderSide: BorderSide(width: 1.5, color: COLOR.Black),
             borderRadius: BorderRadius.circular(25)),
         hintText: text,
-        hintStyle: TextStyle(
-            color: COLOR.Black.withOpacity(0.5)));
+        hintStyle: TextStyle(color: COLOR.Black.withOpacity(0.5)));
   }
 
-
-  static OrderStatus(String status, Color bg,Color text ){
+  static OrderStatus(String status, Color bg, Color text) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 15,vertical: 5),
+      margin: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(status),
           ElevatedButton(
-              onPressed: (){},
+              onPressed: () {},
               style: ElevatedButton.styleFrom(
                 primary: bg,
                 onPrimary: text,
@@ -144,36 +152,47 @@ class AppUtils{
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(32.0),
                 ),
-              ) ,
+              ),
               child: Text(status)),
-
         ],
       ),
     );
   }
 
-
-  static loader(){
-    return Stack(
-        alignment: Alignment.center,
-        children:[
-          SizedBox(
-            height:50,
-            width: 50,
-            child: CircularProgressIndicator(
-              backgroundColor: COLOR.DarkMaroon,
-              valueColor: AlwaysStoppedAnimation<Color>(themeColor),
-            ),
+  static Button(
+      String text, Color bg, Color textt, String horiSpace, Function type) {
+    return ElevatedButton(
+        onPressed: () {
+          type;
+        },
+        style: ElevatedButton.styleFrom(
+          primary: bg,
+          onPrimary: textt,
+          padding: EdgeInsets.symmetric(horizontal: double.parse(horiSpace)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(32.0),
           ),
-          Align(
-              alignment: Alignment.center,
-              child: Image.asset('assets/images/ic_cafe_1.png',height: 30,width: 30,))
-        ]
-    );
-}
+        ),
+        child: Text(text));
+  }
 
-
-
-
-
+  static loader() {
+    return Stack(alignment: Alignment.center, children: [
+      SizedBox(
+        height: 50,
+        width: 50,
+        child: CircularProgressIndicator(
+          backgroundColor: COLOR.DarkMaroon,
+          valueColor: AlwaysStoppedAnimation<Color>(themeColor),
+        ),
+      ),
+      Align(
+          alignment: Alignment.center,
+          child: Image.asset(
+            'assets/images/ic_cafe_1.png',
+            height: 30,
+            width: 30,
+          ))
+    ]);
+  }
 }

@@ -95,16 +95,16 @@ flutter:
      - family: an
        fonts:
          - asset: assets/fonts/an_demi_bold.ttf
-         - asset: assets/an_medium.ttf
-         - asset: assets/an_pro_bold.otf
-         - asset: assets/an_pro_regular.otf
+         - asset: assets/fonts/an_medium.ttf
+         - asset: assets/fonts/an_pro_bold.otf
+         - asset: assets/fonts/an_pro_regular.otf
            style: italic
      - family: sf
        fonts:
          - asset: assets/fonts/sf_pro_display_bold.otf
          - asset: assets/fonts/sf_pro_display_medium.otf
          - asset: assets/fonts/sf_pro_display_regular.otf
-         - asset: assets/sf_pro_display_semi_bold.otf
+         - asset: assets/fonts/sf_pro_display_semi_bold.otf
            weight: 700
   #
   # For details regarding fonts from package dependencies,

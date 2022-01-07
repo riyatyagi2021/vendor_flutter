@@ -4,9 +4,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:vendor_flutter/UI/Home/home.dart';
 
 import 'UI/Auth/login_bloc.dart';
 import 'UI/Auth/login_view.dart';
+import 'UI/Home/home_bloc.dart';
+import 'Utils/preference_utils.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,18 +45,39 @@ class Splash extends StatefulWidget {
 }
 
 class _SplashState extends State<Splash> {
+  String ACCESS_TOKEN = "";
+
+  getAccessToken() async {
+    await PreferenceUtils.getAccessToken().then((token) {
+      ACCESS_TOKEN = token.toString();
+      // Fluttertoast.showToast(msg: "tokenn " + ACCESS_TOKEN);
+      print(ACCESS_TOKEN + "  accesstoken");
+    });
+  }
+
   @override
   void initState() {
     super.initState();
-    Timer(
-        Duration(seconds: 2),
-        () => Navigator.push(
+    getAccessToken();
+    Timer(Duration(seconds: 2), () {
+      if (ACCESS_TOKEN == "null") {
+        Navigator.pushReplacement(
             context,
             MaterialPageRoute(
                 builder: (context) => BlocProvider<LoginBloc>(
                       create: (context) => LoginBloc(),
                       child: Login(),
-                    ))));
+                    )));
+      } else {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => BlocProvider<HomeBloc>(
+                      create: (context) => HomeBloc(),
+                      child: HomePage(),
+                    )));
+      }
+    });
   }
 
   @override
