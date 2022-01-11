@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vendor_flutter/Constants/constants.dart';
 import 'package:vendor_flutter/UI/Auth/login_model.dart';
+import 'package:vendor_flutter/UI/Auth/logout/logout_model.dart';
+import 'package:vendor_flutter/UI/Auth/logout/logout_repo.dart';
 import 'package:vendor_flutter/UI/Food/Add/add_food.dart';
 import 'package:vendor_flutter/UI/Food/Delete/delete.dart';
 import 'package:vendor_flutter/UI/Food/Edit/edit.dart';
 import 'package:vendor_flutter/UI/Home/AbousUs/about_us.dart';
 import 'package:vendor_flutter/UI/UserRequest/user_req.dart';
 import 'package:vendor_flutter/UI/Wallet/wallet.dart';
+import 'package:vendor_flutter/UI/Wallet/wallet_bloc.dart';
 import 'package:vendor_flutter/Utils/preference_utils.dart';
+import 'package:vendor_flutter/main.dart';
 
 import 'home_bloc.dart';
 import 'home_state.dart';
@@ -31,211 +36,217 @@ class _HomePageState extends State<HomePage> {
   String LASTNAME = "";
 
   @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-          key: scaffoldKey,
-          drawer: drawer(),
-          body: BlocConsumer<HomeBloc, HomeState>(
-              listener: (context, state) {},
-              builder: (context, state) {
-                if (state.isSuccess) {
-                  var apiData = state.model.responseData;
-                  PreferenceUtils.getUserProfile().then((profile) {
-                    NAME = profile.firstName.toString();
-                    EMAIl = profile.email.toString();
-                    PHONE = profile.phone.toString();
-                    LASTNAME = profile.lastName.toString();
-                    print(NAME);
-                  });
-                  return Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height,
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 10,
-                    ),
-                    decoration: const BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage('assets/images/bg_img.png'),
-                            fit: BoxFit.cover)),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        homeHeader(),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 5),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                " Hello ${NAME},",
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w400,
-                                    color: COLOR.Black),
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Text(
-                                "WELCOME BACK! ",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 17,
-                                    color: COLOR.Black),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              GestureDetector(
-                                  behavior: HitTestBehavior.translucent,
-                                  onTap: () => Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                          builder: (context) => AddFood())),
-                                  child: Image.asset(
-                                    'assets/images/ic_add_food.png',
-                                    fit: BoxFit.fitWidth,
-                                  )),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              SingleChildScrollView(
-                                child: Container(
-                                  height: 509,
-                                  // height: MediaQuery.of(context).size.height - 250,
-                                  child: ListView.builder(
-                                    shrinkWrap: true,
-                                    scrollDirection: Axis.vertical,
-                                    itemCount: apiData?.foodItemList?.length,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      var foodName =
-                                          apiData?.foodItemList?[index].name;
-                                      var price =
-                                          apiData?.foodItemList?[0].price;
+  void initState() {
+    super.initState();
+    PreferenceUtils.getUserProfile().then((profile) {
+      NAME = profile.firstName.toString();
+      EMAIl = profile.email.toString();
+      PHONE = profile.phone.toString();
+      LASTNAME = profile.lastName.toString();
+      print(NAME);
+    });
+  }
 
-                                      return Container(
-                                        height: 110,
-                                        width: double.infinity,
-                                        child: Card(
-                                          child: Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Row(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            left: 10.0,
-                                                            top: 10,
-                                                            bottom: 10),
-                                                    child: Container(
-                                                      width: 90,
-                                                      height: 90,
-                                                      child: ClipRRect(
-                                                        child: FadeInImage
-                                                            .assetNetwork(
-                                                          placeholder:
-                                                              'assets/images/coldcoffee.jpeg',
-                                                          image:
-                                                              '${apiData?.foodItemList?[index].images?[0]}',
-                                                          imageErrorBuilder:
-                                                              (context, error,
-                                                                  stackTrace) {
-                                                            return Container(
-                                                                child: Image.asset(
-                                                                    'assets/images/coldcoffee.jpeg'));
-                                                          },
-                                                          fit: BoxFit.cover,
+  @override
+  Widget build(BuildContext context) {
+    return ScreenUtilInit(
+      designSize: Size(360, 690),
+      builder: () => SafeArea(
+        child: Scaffold(
+            key: scaffoldKey,
+            drawer: drawer(),
+            body: BlocConsumer<HomeBloc, HomeState>(
+                listener: (context, state) {},
+                builder: (context, state) {
+                  if (state.isSuccess) {
+                    var apiData = state.model.responseData;
+
+                    return Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 10,
+                      ),
+                      decoration: const BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage('assets/images/bg_img.png'),
+                              fit: BoxFit.cover)),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          homeHeader(),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 5),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  " Hello ${NAME},",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400,
+                                      color: COLOR.Black),
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Text(
+                                  "WELCOME BACK! ",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 17,
+                                      color: COLOR.Black),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                GestureDetector(
+                                    behavior: HitTestBehavior.translucent,
+                                    onTap: () => Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) => AddFood())),
+                                    child: Image.asset(
+                                      'assets/images/ic_add_food.png',
+                                      fit: BoxFit.fitWidth,
+                                    )),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                SingleChildScrollView(
+                                  child: Container(
+                                    height: 475.h, //500
+                                    // height: MediaQuery.of(context).size.height - 250,
+                                    child: ListView.builder(
+                                      shrinkWrap: true,
+                                      scrollDirection: Axis.vertical,
+                                      itemCount: apiData?.foodItemList?.length,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        var foodName =
+                                            apiData?.foodItemList?[index].name;
+                                        var price =
+                                            apiData?.foodItemList?[index].price;
+
+                                        return Container(
+                                          height: 110,
+                                          width: double.infinity,
+                                          child: Card(
+                                            child: Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Row(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 10.0,
+                                                              top: 10,
+                                                              bottom: 10),
+                                                      child: Container(
+                                                        width: 90,
+                                                        height: 90,
+                                                        child: ClipRRect(
+                                                          child: FadeInImage
+                                                              .assetNetwork(
+                                                            placeholder:
+                                                                'assets/images/coldcoffee.jpeg',
+                                                            image:
+                                                                '${apiData?.foodItemList?[index].images?[0]}',
+                                                            imageErrorBuilder:
+                                                                (context, error,
+                                                                    stackTrace) {
+                                                              return Container(
+                                                                  child: Image
+                                                                      .asset(
+                                                                          'assets/images/coldcoffee.jpeg'));
+                                                            },
+                                                            fit: BoxFit.cover,
+                                                          ),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      10.0),
                                                         ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10.0),
                                                       ),
                                                     ),
-                                                  ),
-                                                  SizedBox(
-                                                    width: 20,
-                                                  ),
-                                                  Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        " ${foodName}",
-                                                        style: TextStyle(
-                                                            fontSize: 14,
-                                                            color: COLOR.Black),
-                                                      ),
-                                                      SizedBox(
-                                                        height: 4,
-                                                      ),
-                                                      Text(
-                                                        "\u{20B9}${price}",
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize: 12,
-                                                            color: COLOR.Black),
-                                                      )
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                              IconButton(
-                                                  onPressed: () {
-                                                    bottomSheet(context,
-                                                        foodName!, price!);
-                                                  },
-                                                  icon: Icon(
-                                                    Icons.more_vert_rounded,
-                                                    color: COLOR.Black,
-                                                    size: 30,
-                                                  ))
-                                            ],
+                                                    SizedBox(
+                                                      width: 20,
+                                                    ),
+                                                    Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          "${foodName}",
+                                                          style: TextStyle(
+                                                              fontSize: 14,
+                                                              color:
+                                                                  COLOR.Black),
+                                                        ),
+                                                        SizedBox(
+                                                          height: 4,
+                                                        ),
+                                                        Text(
+                                                          "\u{20B9}${price}",
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              fontSize: 12,
+                                                              color:
+                                                                  COLOR.Black),
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                                IconButton(
+                                                    onPressed: () {
+                                                      bottomSheet(context,
+                                                          foodName!, price!);
+                                                    },
+                                                    icon: Icon(
+                                                      Icons.more_vert_rounded,
+                                                      color: COLOR.Black,
+                                                      size: 30,
+                                                    ))
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                      );
-                                    },
+                                        );
+                                      },
+                                    ),
                                   ),
-                                ),
-                              )
-                            ],
+                                )
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  );
-                } else {
-                  return Container();
-                }
-              })),
+                        ],
+                      ),
+                    );
+                  } else {
+                    return Container();
+                  }
+                })),
+      ),
     );
   }
 
   Widget drawer() => BlocConsumer<HomeBloc, HomeState>(
       listener: (context, state) {},
       builder: (context, state) {
-        /*var name =
-            widget.model?.responseData?.employeeProfile?.firstName.toString();
-        var lastName =
-            widget.model?.responseData?.employeeProfile?.lastName.toString();
-        var email =
-            widget.model?.responseData?.employeeProfile?.email.toString();
-        var phone =
-            widget.model?.responseData?.employeeProfile?.phone.toString();
-*/
         return ClipRRect(
           borderRadius: BorderRadius.only(
               topRight: Radius.circular(26.0),
@@ -386,8 +397,15 @@ class _HomePageState extends State<HomePage> {
                     height: 10,
                   ),
                   InkWell(
-                    onTap: () => Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => MyWallet())),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => BlocProvider<WalletBloc>(
+                                    create: (context) => WalletBloc(),
+                                    child: MyWallet(),
+                                  )));
+                    },
                     child: Row(
                       children: [
                         Container(
@@ -484,7 +502,18 @@ class _HomePageState extends State<HomePage> {
                             fontSize: 14,
                             color: COLOR.Black),
                       ),
-                      onPressed: () {},
+                      onPressed: () async {
+                        LogoutModel logOut = LogoutModel();
+                        logOut = await LogoutRepository().logoutApi("");
+                        print(logOut.statusCode.toString() + " Loggedout????");
+                        if (logOut.statusCode == 1) {
+                          PreferenceUtils.setAccessToken("null");
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Splash()));
+                        }
+                      },
                       style: ElevatedButton.styleFrom(
                         primary: COLOR.White,
                         shape: RoundedRectangleBorder(

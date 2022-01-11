@@ -20,7 +20,6 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -50,7 +49,6 @@ class _SplashState extends State<Splash> {
   getAccessToken() async {
     await PreferenceUtils.getAccessToken().then((token) {
       ACCESS_TOKEN = token.toString();
-      // Fluttertoast.showToast(msg: "tokenn " + ACCESS_TOKEN);
       print(ACCESS_TOKEN + "  accesstoken");
     });
   }

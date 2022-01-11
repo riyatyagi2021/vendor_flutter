@@ -264,11 +264,18 @@ class _LoginState extends State<Login> {
                               ),
                               onPressed: () {
                                 if (formKey.currentState!.validate()) {
-                                  setState(() {
-                                    isLoading = true;
+                                  AppUtils.check().then((internet) {
+                                    if (internet != null && internet) {
+                                      setState(() {
+                                        isLoading = true;
+                                      });
+                                      loginbloc.add(OnLoginApiHit(
+                                          email.text, password.text));
+                                    } else {
+                                      Fluttertoast.showToast(
+                                          msg: "No internet is there");
+                                    }
                                   });
-                                  loginbloc.add(
-                                      OnLoginApiHit(email.text, password.text));
                                 }
                               },
                               style: ElevatedButton.styleFrom(

@@ -1,3 +1,4 @@
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:vendor_flutter/Constants/constants.dart';
 import 'package:vendor_flutter/UI/Auth/login_view.dart';
@@ -195,4 +196,44 @@ class AppUtils {
           ))
     ]);
   }
+
+  static Future<bool> check() async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile) {
+      return true;
+    } else if (connectivityResult == ConnectivityResult.wifi) {
+      return true;
+    }
+    return false;
+  }
+
+/*  File? image;
+  static cameraImage() async {
+    try {
+      final imageFile =
+          await ImagePicker().getImage(source: ImageSource.camera);
+      if (imageFile == null) return;
+      final fileimage = File(imageFile.path);
+      setState(() {
+        this.image = fileimage;
+      });
+    } on PlatformException catch (e) {
+      print("${e} allow permission");
+    }
+  }
+
+  static galleryImage() async {
+    try {
+      final imageFile =
+          await ImagePicker().getImage(source: ImageSource.gallery);
+      if (imageFile == null) return;
+      final fileimage = File(imageFile.path);
+      setState(() {
+        this.image = fileimage;
+      });
+    } on PlatformException catch (e) {
+      print("${e} allow permission");
+      // Fluttertoast.showToast(msg: "${e} allow permission");
+    }
+  }*/
 }
